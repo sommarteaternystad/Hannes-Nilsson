@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>Teater Workshop – Höstlov</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @page { size: 297mm 420mm; margin: 0; }
+  :root{
+    --bg:#160d09;
+    --bg2:#22130c;
+    --yellow:#f5d20f;
+    --brown:#4a1c0c;
+    --cream:#fbf5e6;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ width:297mm; height:420mm; background:var(--bg); }
+  body{ font-family:"Outfit","Helvetica Neue",Arial,sans-serif; color:var(--cream); -webkit-font-smoothing:antialiased; }
+
+  .poster{
+    position:relative; width:297mm; height:420mm; overflow:hidden;
+    background:
+      radial-gradient(900px 700px at 85% 28%, rgba(245,210,15,.20), transparent 65%),
+      radial-gradient(700px 600px at 0% 100%, rgba(245,210,15,.07), transparent 70%),
+      linear-gradient(180deg, var(--bg2) 0%, var(--bg) 60%);
+    padding:20mm 20mm 16mm;
+    display:flex; flex-direction:column;
+  }
+
+  /* top bar */
+  .top{ display:flex; justify-content:space-between; align-items:center; position:relative; z-index:3; }
+  .logo{ height:24mm; display:block; }
+  .tag{
+    font-weight:700; font-size:4.1mm; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--bg); background:var(--yellow); padding:3mm 6mm; border-radius:100px;
+  }
+
+  /* masks graphic */
+  .hero{ position:relative; z-index:2; margin-top:6mm; height:72mm; }
+  .age{ position:absolute; left:0; top:10mm; }
+  .age .k{ font-weight:600; font-size:5mm; letter-spacing:.28em; text-transform:uppercase; color:var(--cream); display:flex; align-items:center; gap:5mm; margin-bottom:3mm; }
+  .age .k::before{ content:""; width:14mm; height:.9mm; background:var(--yellow); }
+  .age .n{ font-weight:900; font-size:46mm; line-height:.85; letter-spacing:-.04em; color:var(--yellow); }
+  .age .n small{ font-size:20mm; letter-spacing:0; font-weight:800; margin-left:3mm; color:var(--cream); }
+  .masks{
+    position:absolute; right:-8mm; top:-8mm; width:124mm; height:auto;
+    filter:drop-shadow(0 6mm 9mm rgba(0,0,0,.5));
+    transform:rotate(-3deg);
+  }
+
+  /* headline */
+  .head{ position:relative; z-index:2; margin-top:4mm; }
+  .eyebrow{
+    font-weight:600; font-size:5mm; letter-spacing:.28em; text-transform:uppercase; color:var(--yellow);
+    display:flex; align-items:center; gap:5mm; margin-bottom:5mm;
+  }
+  .eyebrow::before{ content:""; width:16mm; height:.9mm; background:var(--yellow); }
+  h1{
+    font-weight:900; text-transform:uppercase; line-height:.84; letter-spacing:-.025em;
+    font-size:41mm; color:var(--cream); white-space:nowrap;
+  }
+  h1 span{ display:block; }
+  h1 .y{ color:var(--yellow); }
+
+  .lead{
+    position:relative; z-index:2; margin-top:9mm; max-width:175mm;
+    font-weight:400; font-size:7.6mm; line-height:1.35; color:rgba(251,245,230,.86);
+  }
+  .lead b{ font-weight:700; color:var(--cream); }
+
+  /* info cards */
+  .info{ position:relative; z-index:2; margin-top:auto; padding-top:8mm; display:grid; grid-template-columns:1.25fr 1fr; gap:6mm; }
+  .card{
+    border-radius:7mm; padding:9mm 10mm;
+    background:rgba(251,245,230,.06);
+    border:.3mm solid rgba(251,245,230,.16);
+  }
+  .card.date{ background:var(--yellow); color:var(--bg); border:none; display:flex; flex-direction:column; justify-content:center; }
+  .label{ font-weight:700; font-size:3.8mm; letter-spacing:.2em; text-transform:uppercase; opacity:.7; margin-bottom:3mm; }
+  .date .big{ font-weight:900; font-size:30mm; line-height:.9; letter-spacing:-.03em; }
+  .date .big small{ font-size:13mm; font-weight:800; letter-spacing:0; margin-left:2mm; text-transform:uppercase; }
+  .date .time{ margin-top:5mm; font-weight:700; font-size:13mm; letter-spacing:-.01em; }
+  .date .day{ font-weight:600; font-size:5.2mm; letter-spacing:.2em; text-transform:uppercase; margin-bottom:2mm; opacity:.75; }
+
+  .stack{ display:grid; grid-template-rows:1fr 1fr; gap:6mm; }
+  .card .v{ font-weight:800; font-size:12mm; line-height:1; letter-spacing:-.01em; }
+  .card .v.free{ color:var(--yellow); font-size:15mm; text-transform:uppercase; }
+  .card .s{ margin-top:2.5mm; font-size:5mm; opacity:.8; line-height:1.25; }
+
+  .date .place{ margin-top:6mm; display:flex; align-items:center; gap:2.5mm; font-weight:700; font-size:7mm; padding-top:5mm; border-top:.5mm solid rgba(22,13,9,.25); }
+  .date .place svg{ width:7mm; height:7mm; flex:none; }
+  .stack{ grid-template-rows:auto 1fr; }
+  .card.reg{ display:flex; align-items:center; justify-content:space-between; gap:6mm; padding:7mm 8mm 7mm 10mm; }
+  .card .s{ font-size:4.6mm; max-width:42mm; }
+  .qrtile{ background:var(--cream); border-radius:4mm; padding:3.2mm; width:41mm; height:41mm; flex:none; }
+  .qrtile .qr{ width:100%; height:100%; display:block; }
+
+  /* chips */
+  .chips{ position:relative; z-index:2; display:flex; gap:4mm; margin-top:6mm; }
+  .chip{
+    flex:1; text-align:center; padding:4.6mm 2mm; border-radius:100px;
+    border:.4mm solid var(--yellow); color:var(--yellow);
+    font-weight:700; font-size:5mm; letter-spacing:.06em; text-transform:uppercase;
+  }
+
+  /* footer */
+  .foot{
+    position:relative; z-index:2; margin-top:9mm; padding-top:7mm;
+    border-top:.3mm solid rgba(251,245,230,.2);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .foot .left{ font-size:4.6mm; line-height:1.35; color:rgba(251,245,230,.8); }
+  .foot .left b{ color:var(--yellow); font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:4mm; display:block; margin-bottom:1mm; }
+  .support{ display:flex; align-items:center; gap:5mm; font-size:3.6mm; letter-spacing:.16em; text-transform:uppercase; color:rgba(251,245,230,.6); font-weight:600; }
+  .support img{ height:14mm; display:block; }
+</style>
+</head>
+<body>
+<main class="poster">
+    <header class="top">
+    <img class="logo" src="sommarteatern-logga.png" alt="Sommarteatern i Ystad">
+    <div class="tag">Höstlovsworkshop</div>
+  </header>
+
+  <section class="hero">
+    <div class="age"><div class="k">För barn</div><div class="n">7–12<small>år</small></div></div>
+    <svg class="masks" viewBox="-130 -110 380 250" aria-hidden="true">
+      <defs>
+        <path id="face" d="M0,-72 C42,-72 64,-56 64,-8 C64,42 38,78 0,84 C-38,78 -64,42 -64,-8 C-64,-56 -42,-72 0,-72Z"/>
+      </defs>
+      <!-- komedi -->
+      <g transform="translate(-30 0) rotate(-13)">
+        <use href="#face" fill="#f5d20f" stroke="#4a1c0c" stroke-width="5" stroke-linejoin="round"/>
+        <g fill="none" stroke="#4a1c0c" stroke-width="7" stroke-linecap="round">
+          <path d="M-40,-14 Q-26,-32 -12,-14"/><path d="M12,-14 Q26,-32 40,-14"/>
+        </g>
+        <path d="M-38,20 Q0,78 38,20 Q0,36 -38,20Z" fill="#4a1c0c" stroke="#4a1c0c" stroke-width="4" stroke-linejoin="round"/>
+      </g>
+      <!-- tragedi -->
+      <g transform="translate(130 22) rotate(11)">
+        <use href="#face" fill="#f5d20f" stroke="#4a1c0c" stroke-width="5" stroke-linejoin="round"/>
+        <g fill="#4a1c0c">
+          <ellipse cx="-24" cy="-8" rx="15" ry="7" transform="rotate(-18 -24 -8)"/>
+          <ellipse cx="24" cy="-8" rx="15" ry="7" transform="rotate(18 24 -8)"/>
+        </g>
+        <g fill="none" stroke="#4a1c0c" stroke-width="6" stroke-linecap="round">
+          <path d="M-42,-26 L-12,-38"/><path d="M12,-38 L42,-26"/>
+          <path d="M-28,52 Q0,20 28,52"/>
+        </g>
+      </g>
+    </svg>
+  </section>
+
+  <section class="head">
+    <h1><span>Teater</span><span class="y">Workshop</span></h1>
+  </section>
+
+  <p class="lead">Teaterlekar och dramaövningar för barn – <b>inga förkunskaper behövs.</b> Workshopen hålls av <b>två erfarna teaterlärare</b> från Sommarteatern.</p>
+
+  <section class="info">
+    <div class="card date">
+      <div class="day">Tisdag</div>
+      <div class="big">27<small>oktober</small></div>
+      <div class="time">kl. 11.30–13.00</div>
+      <div class="place"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8 2 5 5 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-4-3-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.500a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>Björnstjernegatan 18</div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <div class="label">Inträde</div>
+        <div class="v free">Gratis</div>
+      </div>
+      <div class="card reg">
+        <div class="regtext">
+          <div class="label">Anmälan</div>
+          <div class="v">Krävs</div>
+          <div class="s">Skanna QR-koden för att anmäla dig</div>
+        </div>
+        <div class="qrtile"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 290" class="qr" role="img" aria-label="QR-kod till anmälan"><path transform="scale(10)" class="qrline" stroke="#160d09" d="M0 0.5h7m1 0h4m1 0h1m1 0h1m3 0h2m1 0h7m-29 1h1m5 0h1m1 0h1m4 0h1m4 0h1m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m5 0h1m3 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h1m1 0h1m3 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h3m5 0h1m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h5m2 0h5m-20 1h1m1 0h2m1 0h3m4 0h2m4 0h1m3 0h1m2 0h1m1 0h2m-27 1h1m1 0h2m1 0h1m1 0h1m2 0h3m3 0h1m1 0h1m1 0h3m3 0h1m-28 1h1m1 0h1m1 0h2m2 0h1m3 0h1m12 0h2m-28 1h3m1 0h2m1 0h1m1 0h3m3 0h1m2 0h2m1 0h1m1 0h2m3 0h1m-29 1h1m5 0h1m1 0h3m3 0h2m4 0h2m3 0h2m-25 1h1m1 0h1m3 0h3m1 0h1m1 0h6m2 0h1m3 0h3m-28 1h2m2 0h2m2 0h1m3 0h1m3 0h3m1 0h1m2 0h1m1 0h3m-28 1h4m3 0h1m1 0h2m2 0h3m1 0h1m1 0h3m1 0h1m2 0h1m-24 1h1m1 0h3m2 0h2m1 0h2m4 0h2m2 0h2m1 0h1m-27 1h2m1 0h1m3 0h1m3 0h1m1 0h2m1 0h4m2 0h1m1 0h3m-28 1h1m3 0h3m1 0h3m1 0h4m2 0h1m1 0h1m2 0h1m2 0h1m-25 1h4m1 0h1m1 0h1m2 0h3m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m-26 1h1m1 0h2m1 0h1m3 0h1m1 0h4m1 0h2m1 0h7m-19 1h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h5m-29 1h7m1 0h2m1 0h2m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2m3 0h2m1 0h1m-28 1h1m1 0h3m1 0h1m3 0h1m4 0h4m1 0h5m1 0h2m-28 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h5m1 0h3m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h2m6 0h1m4 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m5 0h3m5 0h1m1 0h1m2 0h1m1 0h1m-28 1h7m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m6 0h1"/></svg>
+</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chips">
+    <div class="chip">Teaterlekar</div>
+    <div class="chip">Dramaövningar</div>
+    <div class="chip">Inga förkunskaper</div>
+  </section>
+
+  <footer class="foot">
+    <div class="left"><b>Sommarteatern i Ystad</b>Anmälan: forms.gle/DqNfv9CV8b5s1xmf7</div>
+    <div class="support"><span>Stöttat av</span><img src="ystad-kommun-negativ.png" alt="Ystads kommun"></div>
+  </footer>
+</main>
+</body>
+</html>
